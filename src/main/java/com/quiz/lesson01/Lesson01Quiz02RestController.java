@@ -16,7 +16,7 @@ public class Lesson01Quiz02RestController {
 	
 	@RequestMapping("/1")
 	//url: http://localhost:8008/lesson01/quiz02/1
-	public List<Map<String, Object>> quiz02_1(){
+	public List<Map<String, Object>> quiz02_1(){  
 		List<Map<String, Object>> list = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
 		map.put("rate", 15);
