@@ -33,4 +33,13 @@ public interface RealEstateMapper {
 			@Param("price")int price, 
 			@Param("rentPrice")Integer rentPrice
 			);
+	
+	//quiz03
+	public int updateRealEstateById(
+			@Param("id")int id, 
+			@Param("type")String type, 
+			@Param("price")int price);
+	
+	//quiz04
+	public int deleteRealEstateByID(int id);
 }
