@@ -10,7 +10,7 @@ import com.quiz.lesson04.mapper.RealtorMapper;
 public class RealtorBO {
 	@Autowired
 	private RealtorMapper realtorMapper;
-	//input: 파라미터들 output: X
+	//input: Realtor  output: X
 	public void addRealtor(Realtor realtor) {
 		realtorMapper.insertRealtor(realtor);
 	}
