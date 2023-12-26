@@ -30,7 +30,7 @@
 						<td>${member.name}</td>
 						<td>${member.phoneNumber}</td>
 						<c:choose>
-							<c:when test="${member.grade eq 'VIP' }">
+							<c:when test="${member.grade eq 'VIP' }"> <%--'vip'혹은 \"vip\" --%>
 								<td class="text-danger">${member.grade}</td>	
 							</c:when>
 							<c:when test="${member.grade eq 'GOLD'}">
@@ -45,7 +45,7 @@
 								<td class="text-primary">${member.point}P</td>	
 							</c:when>
 							<c:otherwise>
-								<td>${member.point}</td>	
+								<td>${member.point}P</td>	
 							</c:otherwise>
 						</c:choose>
 					</tr>
