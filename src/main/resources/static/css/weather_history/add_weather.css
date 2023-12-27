@@ -1,0 +1,14 @@
+@charset "UTF-8";
+#wrap {
+	height: 1000px;
+}
+
+.main {
+	min-height: 900px;
+}
+#footer {
+	height: 100px;
+}
+.menu {
+	background-color: #6699FF;
+}

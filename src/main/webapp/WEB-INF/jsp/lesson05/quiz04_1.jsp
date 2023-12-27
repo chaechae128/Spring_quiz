@@ -17,6 +17,7 @@
 <body>
 	<div class="container">
 		<h1>회원 정보 리스트</h1>
+		<img src="/img/cloudy.jpg" />
 		<table class="table text-center">
 			<thead>
 				<th>No.</th>
@@ -42,7 +43,8 @@
 							</c:choose>
 						</td>
 						<td>${fn:replace(member.nationality,'삼국시대', '삼국 -')}</td>
-						<td>${member.email}</td>
+						<td><b>${fn:split(member.email, '@')[0]}</b>@${fn:split(member.email, '@')[1]}
+						</td>
 						<td>
 							<c:choose>
 								<c:when test="${fn:length(member.introduce) >= 15}" >
