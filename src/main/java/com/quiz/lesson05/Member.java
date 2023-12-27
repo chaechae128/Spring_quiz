@@ -2,10 +2,10 @@ package com.quiz.lesson05;
 
 public class Member {
 	private String name;
-	private String PhoneNumber;
-	private String Nationality;
-	private String Email;
-	private String Introduce;
+	private String phoneNumber;
+	private String nationality;
+	private String email;
+	private String introduce;
 	public String getName() {
 		return name;
 	}
@@ -13,29 +13,30 @@ public class Member {
 		this.name = name;
 	}
 	public String getPhoneNumber() {
-		return PhoneNumber;
+		return phoneNumber;
 	}
 	public void setPhoneNumber(String phoneNumber) {
-		PhoneNumber = phoneNumber;
+		this.phoneNumber = phoneNumber;
 	}
 	public String getNationality() {
-		return Nationality;
+		return nationality;
 	}
 	public void setNationality(String nationality) {
-		Nationality = nationality;
+		this.nationality = nationality;
 	}
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 	public String getIntroduce() {
-		return Introduce;
+		return introduce;
 	}
 	public void setIntroduce(String introduce) {
-		Introduce = introduce;
+		this.introduce = introduce;
 	}
+	
 	
 	
 }
