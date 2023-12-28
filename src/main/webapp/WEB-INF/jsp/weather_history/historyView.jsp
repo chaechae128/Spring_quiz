@@ -26,69 +26,90 @@
 
 </head>
 <body>
-	<div class="container" id="wrap">
-		<div class="d-flex main">
-			<div class="col-2 menu">
-				<img src="/img/foot_logo.png" alt="기상청 로고" class="" width=80px>
-				<nav class="mt-3">
-					<ul class="nav">
-						<li class="nav-item"><a href="#" class="nav-link text-white">날씨</a></li>
-						<li class="nav-item"><a href="#" class="nav-link text-white">날씨입력</a></li>
-						<li class="nav-item"><a href="#" class="nav-link text-white">테마날씨</a></li>
-						<li class="nav-item"><a href="#" class="nav-link text-white">관측
-								기후</a></li>
-					</ul>
-				</nav>
-			</div>
-			<div class="col-10">
-				<div class="display-4">과거 날씨</div>
-				<table class="text-center w-100 table">
-					<thead>
-						<th>날짜</th>
-						<th>날씨</th>
-						<th>기온</th>
-						<th>강수량</th>
-						<th>미세먼지</th>
-						<th>풍속</th>
-					</thead>
-					<tbody>
-						<c:forEach items="${weathers}" var="weather">
-							<tr>
-								<fmt:parseDate value="${weather.date}" pattern="yyyy-MM-dd" var="date"/>
-								<td><fmt:formatDate value="${date}" pattern="yyyy년 M월 dd일"  /></td>
-								<td>
-									<c:choose>
-										<c:when test="${weather.weather eq '맑음'}">
-											<img src="/img/sunny.jpg" alt="맑음">
-										</c:when>
-										<c:when test="${weather.weather eq '구름조금'}">
-											<img src="/img/partlyCloudy.jpg" alt="구름조금">
-										</c:when>
-										<c:when test="${weather.weather eq '흐림'}">
-											<img src="/img/cloudy.jpg" alt="흐림">
-										</c:when>
-										<c:when test="${weather.weather eq '비'}">
-											<img src="/img/rainy.jpg" alt="비">
-										</c:when>
-									</c:choose>
-								</td>
-								<td>${weather.temperatures}℃</td>
-								<td>${weather.precipitation}mm</td>
-								<td>${weather.microDust}</td>
-								<td>${weather.windSpeed}km/h</td>
-							</tr>
-						</c:forEach>
+	<div id="wrap">
+		<div class="contents d-flex">
+			<%-- 메뉴 영역 --%>
+			<nav class="col-2">
+				<%-- 상단 로고 --%>
+				<div class="logo d-flex justify-content-center mt-3">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Emblem_of_the_Government_of_the_Republic_of_Korea.svg/800px-Emblem_of_the_Government_of_the_Republic_of_Korea.svg.png" width="25">
+					<span class="text-white font-weight-bold ml-2">기상청</span>
+				</div>
 
-					</tbody>
+				<%-- 메뉴 --%>
+				<%-- flex-column: 세로 메뉴 --%>
+				<ul class="nav flex-column mt-4">
+					<li class="nav-item">
+						<a href="/weather-history/weather-list-view" class="nav-link menu-font">날씨</a>
+					</li>
+					<li class="nav-item">
+						<a href="/weather-history/add-weather-view" class="nav-link menu-font">날씨입력</a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link menu-font">테마날씨</a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link menu-font">관측 기후</a>
+					</li>
+				</ul>
+			</nav>
+
+			<%-- 날씨 히스토리 --%>
+			<section class="weather-history col-10 mt-3 ml-5">
+				<h3>과거 날씨</h3>
+				<table class="table text-center">
+					<thead>
+						<tr>
+							<th>날짜</th>
+							<th>날씨</th>
+							<th>기온</th>
+							<th>강수량</th>
+							<th>미세먼지</th>
+							<th>풍속</th>
+						</tr>
+					</thead>
+					  <tbody>
+                  <c:forEach items="${weathers}" var="weather">
+                     <tr>
+                        <fmt:parseDate value="${weather.date}" pattern="yyyy-MM-dd" var="date"/>
+                        <td><fmt:formatDate value="${date}" pattern="yyyy년 M월 dd일"  /></td>
+                        <td>
+                           <c:choose>
+                              <c:when test="${weather.weather eq '맑음'}">
+                                 <img src="/img/sunny.jpg" alt="맑음">
+                              </c:when>
+                              <c:when test="${weather.weather eq '구름조금'}">
+                                 <img src="/img/partlyCloudy.jpg" alt="구름조금">
+                              </c:when>
+                              <c:when test="${weather.weather eq '흐림'}">
+                                 <img src="/img/cloudy.jpg" alt="흐림">
+                              </c:when>
+                              <c:when test="${weather.weather eq '비'}">
+                                 <img src="/img/rainy.jpg" alt="비">
+                              </c:when>
+                           </c:choose>
+                        </td>
+                        <td>${weather.temperatures}℃</td>
+                        <td>${weather.precipitation}mm</td>
+                        <td>${weather.microDust}</td>
+                        <td>${weather.windSpeed}km/h</td>
+                     </tr>
+                  </c:forEach>
+
+               </tbody>
+
 				</table>
-			</div>
+			</section>
 		</div>
-		<footer class="d-flex align-items-center" id="footer">
-			<img src="/img/foot_logo.png" alt="기상청 로고" class="m-3 col-2">
-			<div class="text-secondary">
-				<small>서울 (07062) 서울특별시 동작구 여의대방로16길 61</small>
-				<p>Copyright@2022 KMA. All Rights RESERVED.
-				<p>
+		<footer class="d-flex align-items-center">
+			<div class="footer-logo ml-4">
+				<img class="foot-logo-image" src="https://www.weather.go.kr/w/resources/image/foot_logo.png" width="120">
+			</div>
+			<div class="copyright ml-4">
+				<small class="text-secondary"> 
+					(07062) 서울시 동작구 여의대방로16길 61 <br>
+					Copyright@20XX KMA. All Rights RESERVED.
+				</small>
 			</div>
 		</footer>
 	</div>
