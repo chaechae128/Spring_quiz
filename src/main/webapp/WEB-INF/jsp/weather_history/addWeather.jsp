@@ -126,8 +126,7 @@
 	</div>
 	 <script>
             $(document).ready(function() {
-                //alert("힣")
-                // 모든 데이트피커에 적용
+                
                 $.datepicker.setDefaults({
                     dateFormat:"yy-mm-dd"
                     ,dayNamesMin:["일", "월", "화", "수", "목", "금", "토"]

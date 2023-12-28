@@ -1,6 +1,6 @@
 package com.quiz.weather_history.mapper;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -10,7 +10,7 @@ import com.quiz.weather_history.domain.Weather;
 
 @Repository
 public interface WeatherMapper {
-	public List<Weather> selectWeather();
+	public List<Weather> selectWeatherHistoryList();
 	
 	public void insertWeather(
 			@Param("date")Date date, 
