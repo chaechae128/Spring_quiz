@@ -38,8 +38,6 @@
 		<div class="contents  p-2">
 			<%--컨텐츠  - 리뷰 있을 때 --%>
 			<c:forEach items="${newReviewList}" var="review">
-			<c:choose>
-				<c:when test="${!empty review}">
 				<div class="border border-info rounded border-3 p-3 mb-3">
 					<div class="d-flex align-items-top">	
 						<%--userName, point --%>
@@ -72,14 +70,13 @@
 				</div>
 				
 				
-				</c:when>
-			<%--컨텐츠  - 리뷰 없을 때 --%>
-			<c:otherwise>
-				<h1>없어</h1>
-			</c:otherwise>
-			</c:forEach>
-			</c:choose>
 
+			<%--컨텐츠  - 리뷰 없을 때 --%>
+			</c:forEach>
+
+			<c:if test="${empty newReviewList}">
+			<h1 class="text-center font-weight-bold">작성된 리뷰가 없습니다.</h1>
+			</c:if>
 		</div>
 		<%--footer --%>
 		<hr>
