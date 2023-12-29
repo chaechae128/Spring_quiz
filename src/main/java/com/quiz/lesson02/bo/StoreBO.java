@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.quiz.lesson02.domain.Store;
 import com.quiz.lesson02.mapper.StoreMapper;
+import com.quiz.store.domain.NewReview;
 
 
 @Service 
@@ -18,5 +19,11 @@ public class StoreBO {
 	//output: Repository로부터 받은 List<Store>
 	public List<Store> getStoreList(){
 		return storeMapper.selectStoreList();
+	}
+	
+	
+	public List<NewReview> getNewReviewList(int storeId) {
+		return storeMapper.getNewReviewList(storeId);
+		
 	}
 }

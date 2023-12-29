@@ -32,19 +32,54 @@
 		</header>
 		<%--컨텐츠 제목 --%>
 		<div class="contentName d-flex align-items-center">
-			<div class="display-4">우리동네 가게</div>
+			<div class="display-4">${storeName}- 리뷰</div>
 		</div>
-		<%--컨텐츠 내용 --%>
+		<%--컨텐츠 --%>
 		<div class="contents  p-2">
-			<c:forEach items="${storeList}" var="store">
-					<div class="border border-info rounded border-3 p-3 mb-3">
-						<a href="#" class="">
-							<h4 class="font-weight-bold">${store.name}</h4>
-							<div class="font-weight-bold">전화번호: ${store.phoneNumber}</div>
-							<div class="font-weight-bold">주소: ${store.address}</div>
+			<%--컨텐츠  - 리뷰 있을 때 --%>
+			<c:forEach items="${newReviewList}" var="review">
+			<c:choose>
+				<c:when test="${!empty review}">
+				<div class="border border-info rounded border-3 p-3 mb-3">
+					<div class="d-flex align-items-top">	
+						<%--userName, point --%>
+						<h4 class="font-weight-bold">${review.userName}</h4>
+						<%--fullStar --%>
+						<c:forEach begin="1" end="${review.point}" step="1" varStatus="status">
+							<img src="/img/star_fill.png" width="20px" height="20px"class="mr-1 mt-1">
+							<c:set var="fullStarCount" value="${status.index}"/>
+						</c:forEach>
+						<%--halfStar --%>
+						<c:set var="emptyStar" value="${5-review.point}" />
+						<c:if test="${(review.point - fullStarCount)!= 0}">
+							<img src="/img/star_half.png" width="20px" height="20px"class="mr-1 mt-1">
+						</c:if>
+						<%--emptyStar --%>
+						<c:forEach begin="1" end="${emptyStar}" step="1">
+							<img src="/img/star_empty.png" width="20px" height="20px"class="mr-1 mt-1">
+						</c:forEach>
 					</div>
-			</c:forEach>
+					<%--createdAt --%>
+					<h6 class="text-secondary pb-1">
+						<fmt:formatDate value="${review.createdAt}" pattern="yyyy년 M월 dd일" />
+					</h6>
+					<%--review --%>
+					<c:if test="${not empty review.review}">
+						<h6 class="font-weight-bold pt-1 pb-2">${review.review}</h6>
+					</c:if>
+					<%--menu --%>
+					<span class="menu p-1 rounded ">${review.menu}</span>
+				</div>
 				
+				
+				</c:when>
+			<%--컨텐츠  - 리뷰 없을 때 --%>
+			<c:otherwise>
+				<h1>없어</h1>
+			</c:otherwise>
+			</c:forEach>
+			</c:choose>
+
 		</div>
 		<%--footer --%>
 		<hr>

@@ -37,12 +37,15 @@
 		<%--컨텐츠 내용 --%>
 		<div class="contents  p-2">
 			<c:forEach items="${storeList}" var="store">
+				<a href="/store/review-list-view?storeId=${store.id}&storeName=${store.name}">
+				
 					<div class="border border-info rounded border-3 p-3 mb-3">
-						<a href="#" class="">
 							<h4 class="font-weight-bold">${store.name}</h4>
 							<div class="font-weight-bold">전화번호: ${store.phoneNumber}</div>
 							<div class="font-weight-bold">주소: ${store.address}</div>
+						
 					</div>
+				</a>
 			</c:forEach>
 				
 		</div>
