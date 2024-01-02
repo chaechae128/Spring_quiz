@@ -25,44 +25,44 @@
 	
 	<script>
 		$(document).ready(function() {
-			$("#bookMarkBtn").on('click', function(){
+			$("#bookMarkBtn").on('click', function() {
 				//alert("클릭");
+				
+				//validation
 				let name = $("#name").val();
-				if(name == "") {
+				if(name.length < 1) {
 					alert("이름을 입력하세요");
-					return false;
+					return false; // 서브밋x
 				}
 				
 				let url = $("#url").val();
-				if(url == "" || url.startsWith('http') == false) {
-					alert("정확한 url를 입력하세요");
+				 if(url.startsWith("http") == false){
+					alert("정확한 url을 입력하세요");
 					return false;
-				}
-				
-				
-				console.log(name);
-				console.log(url);
-				
+				} 
+				 
 				$.ajax({
-					//request
-					type:"post"
-					,url:"/lesson06/quiz01/add-bookMark"
-					,data:{"name":name, "url":url}
+					//request 
+					type:"POST"
+					, url:"/lesson06/quiz01/add-bookMark"
+					, data:{"name":name, "url":url}
+				
 					//response
-					,success:function(data) {
+					, success:function(data) {
 						alert(data);
-						if(data =="성공") {
+						if(data == "성공") {
 							location.href = "/lesson06/quiz01/after-add-bookMark-view"
 						}
 					}
-					,error:function(request, status, error) {
+					, error:function(request, status, error){
 						alert(request);
 						alert(status);
 						alert(error);
 					}
-				});
-			}); //click
-		});
+				});//ajax끝
+				
+			});//click
+		});//document
 	</script>
 </body>
 </html>
