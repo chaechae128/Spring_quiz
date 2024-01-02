@@ -1,6 +1,8 @@
 package com.quiz.lesson06;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,20 +16,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.quiz.lesson06.bo.BookmarkBO;
 import com.quiz.lesson06.domain.Bookmark;
 
-@RequestMapping("lesson06/quiz01")
+@RequestMapping("lesson06")
 @Controller
-public class Lesson06Quiz01Controller {
+public class Lesson06Controller {
 	
 	@Autowired
 	private BookmarkBO bookmarkBO;
-	@GetMapping("add-bookMark-view")
+	@GetMapping("/quiz01/add-bookMark-view")
 	public String addBookMarkView() {
 		return "lesson06/addBookMark";
 	}
 	
-	@ResponseBody
-	@PostMapping("/add-bookMark")
-	public String addBookMark(
+	
+	// 입력 수행 - AJAX 통신 요청 => 응답값은 무조건 JSON String 
+	@ResponseBody //꼭 있어야됨
+	@PostMapping("/quiz01/add-bookMark")
+	public Map<String, Object> addBookMark(
 			@RequestParam("name") String name,
 			@RequestParam("url") String url
 			) {
@@ -35,11 +39,16 @@ public class Lesson06Quiz01Controller {
 		//insert DB
 		bookmarkBO.setBookmark(name, url);
 		
-		return"성공";
+		//{"code":200, "result":"성공"}  <- 이게 하나의 뭉텅이인 String 이게 뭐 key-value로 이루어진거다 이런거 모름  <- 이걸 나중에 ajax에서 파싱
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("result", "성공");
+		
+		return result; //map => JSON String
 	}
 	
 	//성공화면
-	@GetMapping("/after-add-bookMark-view")
+	@GetMapping("/quiz01/after-add-bookMark-view")
 	public String afterAddBookMarkView(Model model) {
 		//select
 		

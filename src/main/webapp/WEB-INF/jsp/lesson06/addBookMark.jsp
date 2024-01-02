@@ -17,27 +17,36 @@
 	<div>
 		<h1>즐겨 찾기 추가하기</h1>
 		<div>제목</div>
-		<input type="text" id="name" name="name" class="col-12 form-control"><br>
+		<input type="text" id="name" class="col-12 form-control"><br>
 		<div>주소</div>
-		<input type="text" id="url" name="url" class="col-12 form-control" ><br>
-		<input type="button" id="bookMarkBtn" class="btn btn-success col-12" value="추가"><br>
+		<div class="d-flex">
+			<input type="text" id="url" class="col-10 form-control" >
+			<button class="btn btn-info ml-3" type="button" id="urlCheckBtn">중복확인</button>
+		</div>
+		<small id="urlStatusArea"></small>
+		<input type="button" id="addBtn" class="btn btn-success col-12" value="추가"><br>
 	</div>
 	
 	<script>
 		$(document).ready(function() {
-			$("#bookMarkBtn").on('click', function() {
+			//추가 버튼 클릭
+			$("#addBtn").on('click', function() {
 				//alert("클릭");
 				
 				//validation
-				let name = $("#name").val();
+				let name = $("#name").val().trim();
 				if(name.length < 1) {
 					alert("이름을 입력하세요");
 					return false; // 서브밋x
 				}
 				
-				let url = $("#url").val();
-				 if(url.startsWith("http") == false){
-					alert("정확한 url을 입력하세요");
+				let url = $("#url").val().trim();
+				if(!url) {
+					alert("주소를 입력하세요");
+					return false;
+				}
+				 if(url.startsWith("http://") == false && url.startsWith("https://") == false){
+					alert("주소 형식이 잘못 되었습니다.");
 					return false;
 				} 
 				 
@@ -47,12 +56,17 @@
 					, url:"/lesson06/quiz01/add-bookMark"
 					, data:{"name":name, "url":url}
 				
-					//response
-					, success:function(data) {
-						alert(data);
-						if(data == "성공") {
+					//response - call back 함수  
+					, success:function(data) { //data: JSON String => jquery ajax함수가 parsing 과정 거친 후 => dictionary가 됨
+						//alert(data.code);
+						if(data.conde == 200) {  //혹은 data.result == "성공"
 							location.href = "/lesson06/quiz01/after-add-bookMark-view"
 						}
+					
+						/* if(data == "성공") {
+							//목록 화면으로 이동 
+							location.href = "/lesson06/quiz01/after-add-bookMark-view" // 이게 없으면 화면이동x 멈춰있음
+						} */
 					}
 					, error:function(request, status, error){
 						alert(request);
@@ -62,6 +76,8 @@
 				});//ajax끝
 				
 			});//click
+			
+			
 		});//document
 	</script>
 </body>

@@ -18,7 +18,7 @@
 </head>
 <body>
 	<h1>즐겨찾기 목록</h1>
-	<table>
+	<table class="table text-center">
 		<thead>
 			<th>No.</th>
 			<th>이름</th>
@@ -27,9 +27,9 @@
 		<tbody>
 			<c:forEach items="${bookmarkList}" var="bookmark" varStatus="status">
 				<tr>
-					<td>${status.index}</td>
+					<td>${status.count}</td>
 					<td>${bookmark.name}</td>
-					<td>${bookmark.url}</td>
+					<td><a href="${bookmark.url}">${bookmark.url}</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
