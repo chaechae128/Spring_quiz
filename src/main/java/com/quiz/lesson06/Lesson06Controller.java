@@ -26,7 +26,18 @@ public class Lesson06Controller {
 	public String addBookMarkView() {
 		return "lesson06/addBookMark";
 	}
-	
+	//중복확인 - AJAX요청
+	@ResponseBody
+	@GetMapping("/quiz01/is-duplication-url")
+	public Map<String, Object> isDuplicationUrl(
+			@RequestParam("url") String url){
+		boolean isDuplication = bookmarkBO.isDuplicationByUrl(url);
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("is_duplication", isDuplication);
+		
+		return result;
+	}
 	
 	// 입력 수행 - AJAX 통신 요청 => 응답값은 무조건 JSON String 
 	@ResponseBody //꼭 있어야됨
@@ -56,6 +67,21 @@ public class Lesson06Controller {
 		model.addAttribute("bookmarkList", bookmarkList);
 		
 		return "/lesson06/afterAddBookMark";
+	}
+	
+	//delete 수행 
+	@ResponseBody
+	@PostMapping("/quiz01/delete-bookmark")
+	public Map<String, Object> deleteBookmark(
+			@RequestParam("name")String name){
+		bookmarkBO.deleteBookmark(name);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("result", "성공");
+		
+		return result; //map => JSON String
+		
 	}
 	
 }

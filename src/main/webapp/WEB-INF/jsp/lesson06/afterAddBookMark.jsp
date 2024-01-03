@@ -28,11 +28,40 @@
 			<c:forEach items="${bookmarkList}" var="bookmark" varStatus="status">
 				<tr>
 					<td>${status.count}</td>
-					<td>${bookmark.name}</td>
+					<td id="name">${bookmark.name}</td>
 					<td><a href="${bookmark.url}">${bookmark.url}</a></td>
+					<td><button type="button" class="btn btn-danger deleteBtn">삭제</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 </body>
+<script>
+	$(document).ready(function(){
+		$(".deleteBtn").click(function(){
+			var deleteBtn = $(this);
+			var tr = deleteBtn.parent().parent();
+			var td = tr.children();
+			var name = td.eq(1).text();
+			$.ajax({
+				//request
+				type:"POST"
+				,url:"/lesson06/quiz01/delete-bookmark"
+				,data:{"name":name}
+				//response
+				,success:function(data){
+					if(data.code == 200){
+						location.href = "/lesson06/quiz01/after-add-bookMark-view"
+					}
+				}
+				, error:function(request, status, error){
+					alert(request);
+					alert(status);
+					alert(error);
+				}
+			});
+		});
+		
+	});
+</script>
 </html>

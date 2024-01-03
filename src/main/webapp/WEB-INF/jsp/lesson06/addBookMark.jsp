@@ -17,18 +17,45 @@
 	<div>
 		<h1>즐겨 찾기 추가하기</h1>
 		<div>제목</div>
-		<input type="text" id="name" class="col-12 form-control"><br>
+		<input type="text" id="name" class="col-10 form-control"><br>
 		<div>주소</div>
 		<div class="d-flex">
 			<input type="text" id="url" class="col-10 form-control" >
 			<button class="btn btn-info ml-3" type="button" id="urlCheckBtn">중복확인</button>
 		</div>
 		<small id="urlStatusArea"></small>
-		<input type="button" id="addBtn" class="btn btn-success col-12" value="추가"><br>
+		<input type="button" id="addBtn" class="btn btn-success col-12 mt-3" value="추가"><br>
 	</div>
 	
 	<script>
 		$(document).ready(function() {
+			//중복확인 버튼 클릭
+			$('#urlCheckBtn').on('click', function(){
+				//하위 태그 초기화
+				$('#urlStatusArea').empty();
+				
+				let url =  $('#url').val().trim();
+				
+				$.ajax({
+					//request
+					type:"GET"
+					,url:"/lesson06/quiz01/is-duplication-url"
+					,data:{"url":url}
+					//response
+					,success:function(data) {
+						if(data.is_duplication) {
+							//중복일 때
+							$('#urlStatusArea').append('<span class="text-danger">중복된 url 입니다</span>')
+						} else {
+							$('#urlStatusArea').append('<span class="text-success">저장 가능한 url 입니다.</span>')
+						}
+					}
+					,error:function(request, status, error){
+						alert("url 중복확인에 실패했습니다.");
+					}
+				});
+			});
+			
 			//추가 버튼 클릭
 			$("#addBtn").on('click', function() {
 				//alert("클릭");
@@ -59,14 +86,9 @@
 					//response - call back 함수  
 					, success:function(data) { //data: JSON String => jquery ajax함수가 parsing 과정 거친 후 => dictionary가 됨
 						//alert(data.code);
-						if(data.conde == 200) {  //혹은 data.result == "성공"
+						if(data.code == 200) {  //혹은 data.result == "성공"
 							location.href = "/lesson06/quiz01/after-add-bookMark-view"
 						}
-					
-						/* if(data == "성공") {
-							//목록 화면으로 이동 
-							location.href = "/lesson06/quiz01/after-add-bookMark-view" // 이게 없으면 화면이동x 멈춰있음
-						} */
 					}
 					, error:function(request, status, error){
 						alert(request);
@@ -74,9 +96,7 @@
 						alert(error);
 					}
 				});//ajax끝
-				
 			});//click
-			
 			
 		});//document
 	</script>
