@@ -26,7 +26,14 @@ public class BookmarkBO {
 		return bookmarkMapper.isDuplicationByUrl(url);
 	}
 	
-	public void deleteBookmark(String name) {
-		bookmarkMapper.deleteBookmark(name);
+	public int deleteBookmark(String name) {
+		return bookmarkMapper.deleteBookmark(name);
+	}
+	
+	//중복 없음: [] , 중복이면 리스트는 채워진
+	public boolean isDuplicationUrl(String url) {
+		List<Bookmark> bookmarkList = bookmarkMapper.selectBookmarkList(url);
+		return bookmarkList.isEmpty() ?  false : true;
+		//return bookmarkList.isEmpty();
 	}
 }

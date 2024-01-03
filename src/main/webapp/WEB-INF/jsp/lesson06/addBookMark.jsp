@@ -14,16 +14,17 @@
 
 </head>
 <body>
-	<div>
+	<div class="container">
 		<h1>즐겨 찾기 추가하기</h1>
 		<div>제목</div>
-		<input type="text" id="name" class="col-10 form-control"><br>
+		<input type="text" id="name" class="col-11 form-control"><br>
 		<div>주소</div>
-		<div class="d-flex">
+		<div class="form-inline">
 			<input type="text" id="url" class="col-10 form-control" >
-			<button class="btn btn-info ml-3" type="button" id="urlCheckBtn">중복확인</button>
+			<button class="btn btn-info ml-3 col-1" type="button" id="urlCheckBtn">중복확인</button>
 		</div>
-		<small id="urlStatusArea"></small>
+		<small id="duplicationText" class="text-danger d-none">중복된 url 입니다</small>
+		<small id="availableUtlText" class="text-success d-none">저장 가능한 url 입니다.</small>
 		<input type="button" id="addBtn" class="btn btn-success col-12 mt-3" value="추가"><br>
 	</div>
 	
@@ -34,20 +35,26 @@
 				//하위 태그 초기화
 				$('#urlStatusArea').empty();
 				
-				let url =  $('#url').val().trim();
+				let url = $("#url").val().trim();
+				if(!url) {
+					alert("주소를 입력하세요");
+					return false;
+				}
 				
 				$.ajax({
 					//request
-					type:"GET"
+					type:"POST" //주소가 길기 때문
 					,url:"/lesson06/quiz01/is-duplication-url"
 					,data:{"url":url}
 					//response
-					,success:function(data) {
+					,success:function(data) { //data: JSON String =>dictionary
 						if(data.is_duplication) {
 							//중복일 때
-							$('#urlStatusArea').append('<span class="text-danger">중복된 url 입니다</span>')
+							$('#duplicationText').removeClass("d-none");
+							$('#availableUtlText').addClass("d-none");
 						} else {
-							$('#urlStatusArea').append('<span class="text-success">저장 가능한 url 입니다.</span>')
+							$('#availableUtlText').removeClass("d-none");
+							$('#duplicationText').addClass("d-none");
 						}
 					}
 					,error:function(request, status, error){

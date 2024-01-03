@@ -37,7 +37,18 @@
  		WHERE
  			`url` = #{url}
  	</select>
- 	
+ 	<select id="selectBookmarkList" parameterType="string" resultType="com.quiz.lesson06.domain.Bookmark">
+ 		SELECT
+ 			`id`
+ 			,`name`
+ 			,`url`
+ 			,`createdAt`
+ 			,`updatedAt`
+ 		FROM
+ 			`bookmark`
+ 		WHERE
+ 			`url` = #{url}
+ 	</select>
  	<delete id="deleteBookmark" parameterType="string">
  		DELETE 
  		FROM

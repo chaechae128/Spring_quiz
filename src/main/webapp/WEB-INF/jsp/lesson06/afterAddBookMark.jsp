@@ -15,6 +15,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
+
 </head>
 <body>
 	<h1>즐겨찾기 목록</h1>
@@ -30,7 +31,11 @@
 					<td>${status.count}</td>
 					<td id="name">${bookmark.name}</td>
 					<td><a href="${bookmark.url}">${bookmark.url}</a></td>
-					<td><button type="button" class="btn btn-danger deleteBtn">삭제</button></td>
+					<!-- <td><button type="button" class="delete-btn btn btn-danger">삭제</button></td> -->
+					<%--1) value로 값 넣기 단점: value가 하나의 값만 세탕 가능해서 여러개 값 세팅 불가 --%>
+					<%-- <td><button type="button" class="delete-btn btn btn-danger" value="${bookmark.name}">삭제</button></td> --%>
+					<%--2 data로 값 넣기 카멜방식X 무조건 하이픈(-) 으로--%>
+					<td><button type="button" class="delete-btn btn btn-danger" data-bookmark-name="${bookmark.name}">삭제</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -38,26 +43,41 @@
 </body>
 <script>
 	$(document).ready(function(){
-		$(".deleteBtn").click(function(){
-			var deleteBtn = $(this);
+		//삭제 버튼 클릭 
+		$(".delete-btn").click(function(e){
+			//내가 한 방식
+			/* var deleteBtn = $(this);
 			var tr = deleteBtn.parent().parent();
 			var td = tr.children();
-			var name = td.eq(1).text();
+			var name = td.eq(1).text();  */
+			//1. button value에 담은 값 가져오기
+			//let name = $(this).val();
+			//let name = $(this).attr("value");
+			//let name = e.target.value //지금 클릭된 그것의 value를 가져온다
+			
+			//2. data를 이용해서 값 가져오기
+			//태그 영역: data-bookmark-name 
+			//스크림트 영역: .data('bookmark-name')
+			let name = $(this).data('bookmark-name');
+			
 			$.ajax({
 				//request
-				type:"POST"
+				type:"delete"
 				,url:"/lesson06/quiz01/delete-bookmark"
 				,data:{"name":name}
 				//response
 				,success:function(data){
 					if(data.code == 200){
-						location.href = "/lesson06/quiz01/after-add-bookMark-view"
+						//성공
+						//location.href = "/lesson06/quiz01/after-add-bookMark-view" <- 아예 새로고침 되어서 맨 위로 스크롤 올라감
+						location.reload(true); //새로고침 그 자리레 있음
+					} else if(data.code == 500) {
+						//실패
+						alert(data.error_message)
 					}
 				}
 				, error:function(request, status, error){
-					alert(request);
-					alert(status);
-					alert(error);
+					alert("삭제하는데 실패했습니다. 관리자에게 문의해주세요.");
 				}
 			});
 		});

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,12 +29,14 @@ public class Lesson06Controller {
 	}
 	//중복확인 - AJAX요청
 	@ResponseBody
-	@GetMapping("/quiz01/is-duplication-url")
+	@PostMapping("/quiz01/is-duplication-url")
 	public Map<String, Object> isDuplicationUrl(
 			@RequestParam("url") String url){
-		boolean isDuplication = bookmarkBO.isDuplicationByUrl(url);
+		//boolean isDuplication = bookmarkBO.isDuplicationByUrl(url);
+		boolean isDuplication = bookmarkBO.isDuplicationUrl(url);
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", 200);
+		//result.put("is_duplication", isDuplication);
 		result.put("is_duplication", isDuplication);
 		
 		return result;
@@ -71,14 +74,20 @@ public class Lesson06Controller {
 	
 	//delete 수행 
 	@ResponseBody
-	@PostMapping("/quiz01/delete-bookmark")
+	@DeleteMapping("/quiz01/delete-bookmark")
 	public Map<String, Object> deleteBookmark(
 			@RequestParam("name")String name){
-		bookmarkBO.deleteBookmark(name);
 		
+		
+		int rowCount = bookmarkBO.deleteBookmark(name);
 		Map<String, Object> result = new HashMap<>();
-		result.put("code", 200);
-		result.put("result", "성공");
+		if (rowCount > 0) {
+			result.put("code", 200);
+			result.put("result", "성공");
+		} else {
+			result.put("code", 500);
+			result.put("error_message", "실패");
+		}
 		
 		return result; //map => JSON String
 		
