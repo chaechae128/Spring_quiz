@@ -56,48 +56,19 @@
          <section class="confirm col-4">
             <!-- 예약 확인 라디오 버튼-->
             <div class="text-white mt-3">
-               <span class="reserve-confirm">예약 확인</span> <label class="ml-3">
-                  <span>회원</span> <input type="radio" name="member" value="member"
-                  checked>
-               </label> <label class="ml-3"> <span>비회원</span> <input type="radio"
-                  name="member" value="nonMember">
-               </label>
+               <span class="reserve-confirm">예약 확인</span>
             </div>
 
-            <!-- 아이디 비밀번호 (회원) -->
-            <div id="memberBox" class="mr-3 d-none">
+            <div  class="mr-3">
                <div class="d-flex align-items-center justify-content-end mt-3">
-                  <span class="text-white mr-2">아이디</span> <input type="text"
-                     id="id" class="form-control col-9">
+                  <span class="text-white mr-2">이름</span> <input type="text" id="name" class="form-control col-9">
                </div>
                <div class="d-flex align-items-center justify-content-end mt-3">
-                  <span class="text-white mr-2">비밀번호</span> <input type="password"
-                     id="password" class="form-control col-9">
+                  <span class="text-white mr-2">전화번호</span> <input type="text" id="phoneNumber" class="form-control col-9">
                </div>
 
                <!-- 버튼 -->
                <div class="d-flex justify-content-end mt-3">
-                  <button type="button" class="submit-btn btn btn-success">조회하기</button>
-               </div>
-            </div>
-
-            <!-- 비회원 -->
-            <div id="nonMemberBox" class="mr-3">
-               <div class="d-flex align-items-center justify-content-end mt-2">
-                  <span class="text-white mr-2">이름</span> <input type="text"
-                     id="name" class="form-control col-9">
-               </div>
-               <div class="d-flex align-items-center justify-content-end mt-2">
-                  <span class="text-white mr-2">전화번호</span> <input type="text"
-                     id="phoneNumber" class="form-control col-9">
-               </div>
-               <div class="d-flex align-items-center justify-content-end mt-2">
-                  <span class="text-white mr-2">날짜</span> <input type="text"
-                     id="reserveDate" class="form-control col-9">
-               </div>
-
-               <!-- 버튼 -->
-               <div class="d-flex justify-content-end mt-2">
                   <button type="button" class="submit-btn btn btn-success">조회하기</button>
                </div>
             </div>
@@ -121,80 +92,49 @@
    </div>
 
 <script>
-   $(document).ready(
-         function() {
-            // 2-1. 회원/비회원 선택시 인풋폼 내용 바뀌도록 설정
-            $('input[name=member]').on('change', function() {
-               //alert($(this).val());
-               var radioValue = $(this).val();
-               if (radioValue == 'member') {
-                  $('#memberBox').removeClass("d-none");
-                  $('#nonMemberBox').addClass("d-none");
-               } else {
-                  $('#nonMemberBox').removeClass("d-none");
-                  $('#memberBox').addClass("d-none");
-               }
+   $(document).ready(function() {
+            $(".submit-btn").on('click', function(){
+            	//alert("클릭");
+            	let name = $("#name").val().trim();
+            	let phoneNumber = $("#phoneNumber").val().trim();
+            	if(!name){
+            		alert("이름을 입력하세요");
+            	}
+            	if(!phoneNumber){
+            		alert("전화번호를 입력하세요");
+            	}
+            
+            	$.ajax({
+            		type:"POST"
+            		,url:"/booking/search-booking"
+            		,data:{"name":name, "phoneNumber":phoneNumber}
+            	
+            		,success:function(data){
+            			//alert(data.name);
+            			if(data.code == 200) {
+            				/* alert("이름 : " + data.name + "\n" +
+            						"날짜 : " + data.date + "\n" +
+            						"일수 : " + data.day + "\n" +
+            						"인원 : " + data.headcount + "\n" +
+            						"상태 : " + data.state + "\n"); */
+            				alert("이름 : " + data.booking.name + "\n" +
+            						"날짜 : " + data.booking.date.slice(0,10)+ "\n" +
+            						"일수 : " + data.booking.day + "\n" +
+            						"인원 : " + data.booking.headcount + "\n" +
+            						"상태 : " + data.booking.state + "\n");
+
+            			} else {
+            				alert(data.error_message);
+            			}
+            		}
+            		,error:function(request, status, error){
+            			alert("조회하는데 실패했습니다.");
+            		}
+            		
+            	});
             });
-
-            // 2-2. 날짜 영역 datePicker로 선택하기
-            $('#reserveDate').datepicker({
-               dateFormat : "yy년 mm월 dd일" // 2021년 00월 00일
-               ,
-               minDate : 0
-            // 오늘 날짜 이후로 선택
-            });
-
-            // 3. 조회하기 버튼 클릭
-            $('.submit-btn').on(
-                  'click',
-                  function(e) {
-                     e.preventDefault();
-
-                     var memberRadioValue = $(
-                           'input:radio[name=member]:checked')
-                           .val(); // 라디오 버튼 중 선택된 value
-                     console.log(memberRadioValue); // member or nonMember
-
-                     if (memberRadioValue == 'member') {
-                        // 회원 validation
-                        if ($('#id').val().trim() == '') {
-                           alert("아이디를 입력하세요");
-                           return;
-                        }
-
-                        if ($('#password').val() == '') {
-                           alert("비밀번호를 입력하세요");
-                           return;
-                        }
-                     } else {
-                        // 비회원 validation
-                        if ($('#name').val().trim() == '') {
-                           alert("이름을 입력하세요");
-                           return;
-                        }
-
-                        if ($('#phoneNumber').val().trim() == '') {
-                           alert("전화번호를 입력하세요");
-                           return;
-                        }
-
-                        if ($('#reserveDate').val() == '') {
-                           alert("날짜를 선택해주세요");
-                           return;
-                        }
-
-                        // 전화번호가 010으로 시작하는지 확인
-                        //-- 첫번째 방법
-                        //$('#phoneNumber').val().slice(0, 3);
-
-                        //-- 두번째 방법
-                        if ($('#phoneNumber').val().startsWith(
-                              '010') === false) {
-                           alert("010으로 시작하는 번호만 입력 가능합니다.");
-                           return;
-                        }
-                     }
-                  });
+	   
+	   
 
             // 4. 이미지 3초 간격으로 변경하기
 

@@ -51,4 +51,23 @@
  			`id` = #{id}
  	
  	</delete>
+ 	
+ 	<select id="selectBookingByNamePhoneNumber" parameterType="map" resultType="com.quiz.booking.domain.Booking">
+ 		SELECT
+ 			`id`
+			,`name`
+			,`headcount`
+			,`day`
+			,`date`
+			,`phoneNumber`
+			,`state`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`booking`
+		WHERE
+ 			`name` = #{name}
+ 		AND
+ 			`phoneNumber` = #{phoneNumber}
+ 	</select>
  </mapper>

@@ -91,10 +91,11 @@
 			$.datepicker.setDefaults({
 				dateFormat:"yy-mm-dd"
                ,dayNamesMin:["일", "월", "화", "수", "목", "금", "토"]
+				,minDate : 0
 			})
 			$("#date").datepicker({    
-                showButtonPanel:true //오늘 버튼 노출              
-                 // 오늘 ~ 선택 가능
+                showButtonPanel:true //오늘 버튼 노출   
+                ,dateFormat:"yy-mm-dd"
                 , onSelect:function(dateText) { //dateText로 이름을 안 지어도 됨
                 }
             });
@@ -121,6 +122,14 @@
 					alert("숙박일수를 입력하세요");
 					return false;
 				}
+				if(isNaN(day)){ //숫자가 아닐 때 참
+					alert("숙박일은 숫자만 가능합니다.");
+					return false;
+				}
+				if(isNaN(headcount)){ //숫자가 아닐 때 참
+					alert("숙박인원은 숫자만 가능합니다.");
+					return false;
+				}
 				if(!headcount){
 					alert("숙박인원을 입력하세요");
 					return false;
@@ -140,6 +149,7 @@
 					, success:function(data) { //data: JSON String => jquery ajax함수가 parsing 과정 거친 후 => dictionary가 됨
 						//alert(data.code);
 						if(data.code == 200) {  //혹은 data.result == "성공"
+							alert("예약되었습니다.");
 							location.href = "/booking/booking-list-view"
 						}
 					}

@@ -100,7 +100,7 @@
 			
 			$.ajax({
 				//request
-				type:"POST"
+				type:"delete"
 				,url:"/booking/delete-booking"
 				,data:{"id":id}
 			,success:function(data){

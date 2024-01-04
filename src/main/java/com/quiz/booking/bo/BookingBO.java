@@ -31,4 +31,10 @@ public class BookingBO {
 	public int deleteBooking(int id) {
 		return bookingMapper.deleteBooking(id);
 	}
+	
+	//이름, 전화번호로 예약 내역 조회
+	//input:name, phoneNumber output: 성공 행
+	public Booking getBookingByNamePhoneNumber(String name, String phoneNumber) {
+		return bookingMapper.selectBookingByNamePhoneNumber(name, phoneNumber);
+	}
 }
