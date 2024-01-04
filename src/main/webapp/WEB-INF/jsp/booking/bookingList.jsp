@@ -46,7 +46,7 @@
          </ul>
       </nav>
       <div class="d-flex justify-content-center">
-      	<h2 class="font-weight-bold"">예약 목록 보기</h2>
+      	<h2 class="font-weight-bold mt-3 mb-3">예약 목록 보기</h2>
       </div>
       
       <%--예약 목록 테이블 --%>
@@ -73,16 +73,53 @@
       							<span class="text-info">${booking.state}</span>
       						</c:when>
       						<c:when test="${booking.state eq '확정'}">
-      							<span class="text-info">${booking.state}</span>
+      							<span class="text-success">${booking.state}</span>
       						</c:when>
       					</c:choose>
       				</td>
+      				<td><button type="button" class="delete-btn btn btn-danger" data-booking-id="${booking.id}">삭제</button></td>
       			</tr>
       		
       		</c:forEach>
       	</tbody>
       </table>
-      
+      <footer class="d-flex align-items-center pl-3">
+         <div class="address">
+            제주특별자치도 제주시 애월읍<br> 사업자등록번호: 111-22-255222 / 농어촌민박사업자지정 /
+            대표:김통목<br> Copyright 2025 tongnamu. All right reserved.
+         </div>
+      </footer>
      </div>
 </body>
+
+<script>
+	$(document).ready(function(){
+		//삭제 btn
+		$(".delete-btn").on('click', function(){
+			let id = $(this).data('booking-id');
+			
+			$.ajax({
+				//request
+				type:"POST"
+				,url:"/booking/delete-booking"
+				,data:{"id":id}
+			,success:function(data){
+				if(data.code == 200){
+					//성공
+					location.reload(true); //새로고침 그 자리레 있음
+				} else if(data.code == 500) {
+					//실패
+					alert(data.error_message)
+				}
+			}
+			, error:function(request, status, error){
+				alert("삭제하는데 실패했습니다. 관리자에게 문의해주세요.");
+			}
+				
+				//response
+			});
+		});
+		
+	});
+</script>
 </html>
