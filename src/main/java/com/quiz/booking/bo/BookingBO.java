@@ -33,33 +33,15 @@ public class BookingBO {
 	}
 	
 	//이름, 전화번호로 예약 내역 조회
-	//input:name, phoneNumber output: 성공 행
+	//input:name, phoneNumber output:List 있으면null, 없으면 객체
 	public Booking getBookingByNamePhoneNumber(String name, String phoneNumber) {
+		//없는 경우:[]  있는경우[...]
 		List<Booking> bookingList = bookingMapper.selectBookingByNamePhoneNumber(name, phoneNumber);
-		Booking booking = new Booking();
-		if(bookingList.size() > 1) {
-			for(int i = 1; i < bookingList.size(); i++) {
-				Date date1 = bookingList.get(0).getDate();
-				Date date2 = bookingList.get(i).getDate();
-				if(date1.before(date2)) {//date2가 date1보다 크다면 date2의 값을 저장
-					booking.setId(bookingList.get(i).getId());
-					booking.setName(bookingList.get(i).getName());
-					booking.setDay(bookingList.get(i).getDay());
-					booking.setDate(bookingList.get(i).getDate());
-					booking.setHeadcount(bookingList.get(i).getHeadcount());
-					booking.setPhoneNumber(bookingList.get(i).getPhoneNumber());
-					booking.setState(bookingList.get(i).getState());
-				}
-			}
-		} else {
-			booking.setId(bookingList.get(0).getId());
-			booking.setName(bookingList.get(0).getName());
-			booking.setDay(bookingList.get(0).getDay());
-			booking.setDate(bookingList.get(0).getDate());
-			booking.setHeadcount(bookingList.get(0).getHeadcount());
-			booking.setPhoneNumber(bookingList.get(0).getPhoneNumber());
-			booking.setState(bookingList.get(0).getState());
-		}
-		return booking;
+		/*
+		 * if(bookingList.isEmpty()) { return null; }
+		 * bookingList.get(bookingList.size()-1);
+		 */
+		
+		return bookingList.isEmpty() ? null : bookingList.get(bookingList.size()-1);
 	}
 }
