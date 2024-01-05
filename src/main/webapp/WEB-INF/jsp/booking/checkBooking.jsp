@@ -117,11 +117,12 @@
             						"일수 : " + data.day + "\n" +
             						"인원 : " + data.headcount + "\n" +
             						"상태 : " + data.state + "\n"); */
-            				alert("이름 : " + data.booking.name + "\n" +
+            				/* alert("이름 : " + data.booking.name + "\n" +
             						"날짜 : " + data.booking.date.slice(0,10)+ "\n" +
             						"일수 : " + data.booking.day + "\n" +
             						"인원 : " + data.booking.headcount + "\n" +
-            						"상태 : " + data.booking.state + "\n");
+            						"상태 : " + data.booking.state + "\n"); */
+            				alert(data.booking.date);
 
             			} else {
             				alert(data.error_message);

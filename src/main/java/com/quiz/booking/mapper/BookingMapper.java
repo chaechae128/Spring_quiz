@@ -25,7 +25,7 @@ public interface BookingMapper {
 	public int deleteBooking(int id);
 	
 	//이름, 전화번호로 조회하기
-	public Booking selectBookingByNamePhoneNumber(
+	public List<Booking> selectBookingByNamePhoneNumber(
 			@Param("name")String name, 
 			@Param("phoneNumber")String phoneNumber);
 }
