@@ -3,12 +3,12 @@ package com.quiz.booking.mapper;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import com.quiz.booking.domain.Booking;
 
-@Repository
+@Mapper
 public interface BookingMapper {
 	//예약 목록 보가
 	public List<Booking> selectBookingList();

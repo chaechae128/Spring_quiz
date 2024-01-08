@@ -27,11 +27,24 @@ public class Lesson07quiz01RestController {
 	
 	@GetMapping("/save2")
 	public CompanyEntity save2() {
-		String name = "버블팡";
-		String business = "여신 금융업";
-		String scale = "대기업";
-		int headcount = 6834;
+//		String name = "버블팡";
+//		String business = "여신 금융업";
+//		String scale = "대기업";
+//		int headcount = 6834;
 		
-		return companyBO.addCompany(name, business, scale, headcount);
+		return companyBO.addCompany("버블팡", "여신 금융업", "대기업", 6834);
+	}
+	
+	@GetMapping("/update")
+	public CompanyEntity update() {
+		return companyBO.updateCompanyScalehHeadcount(14, "중소기업", 34);
+	}
+	
+	@GetMapping("/delete")
+	public String delete() {
+		companyBO.deleteCompanyById(14);
+		return "수행 완료";
 	}
 }
+
+

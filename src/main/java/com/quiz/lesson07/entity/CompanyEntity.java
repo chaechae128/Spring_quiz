@@ -1,5 +1,6 @@
 package com.quiz.lesson07.entity;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,7 +20,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor	
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 @Getter
 @Table(name = "company")
 @Entity
@@ -37,13 +38,14 @@ public class CompanyEntity {
 	
 	private int headcount;
 	
+	
 	@UpdateTimestamp
 	@Column(name="createdAt", updatable = false)
-	private Date createdAt;
+	private ZonedDateTime createdAt;
 	
 	@UpdateTimestamp
 	@Column(name="updatedAt")
-	private Date updatedAt;
+	private ZonedDateTime updatedAt;
 	
 	
 	

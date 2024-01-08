@@ -2,14 +2,14 @@ package com.quiz.lesson02.mapper;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 import com.quiz.lesson02.domain.Store;
 import com.quiz.store.domain.NewReview;
 
 
 
-@Repository
+@Mapper
 public interface StoreMapper {
 	
 	//input: x
