@@ -19,8 +19,8 @@ public class Lesson07Quiz02RestController {
 	private RecruitRepository recruitRepository;
 	
 	@GetMapping("/1")
-	public List<RecruitEntity> getRecruitListById(){
-		return recruitRepository.findById(8);
+	public RecruitEntity getRecruitListById(){
+		return recruitRepository.findById(8).orElse(null);
 	}
 	
 	@GetMapping("/2")
@@ -52,7 +52,11 @@ public class Lesson07Quiz02RestController {
 //	성남시 분당구가 지역인 연봉 7000 이상 8500 이하인 공고를 조회하고 아래와 같이 출력하세요.
 	@GetMapping("/6")
 	public List<RecruitEntity> getRecruitByRegionSalary(){
-		return recruitRepository.findByRegionAndSalaryGreaterThanEqualAndSalaryLessThanEqual("성남시 분당구", 7000, 8500);
+		return recruitRepository.findByRegionAndSalaryBetween("성남시 분당구", 7000, 8500);
+	}
+	@GetMapping("/7")
+	public List<RecruitEntity> getRecruit(){
+		return recruitRepository.findByDeadlineAfterAndSalaryGreaterThanEqualAndTypeOrderBySalaryDesc("2026-04-10", 8100, "정규직");
 	}
 	
 }

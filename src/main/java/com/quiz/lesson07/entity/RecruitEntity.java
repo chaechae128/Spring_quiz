@@ -1,5 +1,6 @@
 package com.quiz.lesson07.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -36,7 +37,7 @@ public class RecruitEntity {
 	private String type;
 	private String region;
 	private int salary;
-	private Date deadline;
+	private LocalDate deadline; // 시분초 없음, 타임존 정보 없음
 	
 	@Column(name ="createdAt", updatable = false)
 	private Date createdAt;
