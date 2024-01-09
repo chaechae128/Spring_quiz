@@ -10,7 +10,7 @@ import com.quiz.lesson07.entity.CompanyEntity;
 
 @RequestMapping("/lesson07/quiz01")
 @RestController
-public class Lesson07quiz01RestController {
+public class Lesson07Quiz01RestController {
 	@Autowired
 	private CompanyBO companyBO;
 	

@@ -10,4 +10,5 @@ public interface CompanyRepository extends JpaRepository<CompanyEntity, Integer>
 	//Spring data JPA
 	
 	//save메소드가 있는데 insert를 해주고 return 은 entity 객체
+	
 }
